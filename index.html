@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>후쿠오카 3박4일</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#EFF1F5;
+    --surface:#FFFFFF;
+    --surface-2:#F7F8FB;
+    --ink:#1B2338;
+    --ink-dim:#5B6272;
+    --indigo:#26365B;
+    --indigo-soft:#3E4F7A;
+    --gold:#B98B2E;
+    --vermillion:#A63B36;
+    --line:#DBDFE7;
+    --line-strong:#C4CADA;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#11141E;
+      --surface:#1A1E2C;
+      --surface-2:#202638;
+      --ink:#E9EAF0;
+      --ink-dim:#A7ADBD;
+      --indigo:#93A6D9;
+      --indigo-soft:#7C90C6;
+      --gold:#D9AE55;
+      --vermillion:#E28A7E;
+      --line:#2C3244;
+      --line-strong:#3A4258;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#11141E;
+    --surface:#1A1E2C;
+    --surface-2:#202638;
+    --ink:#E9EAF0;
+    --ink-dim:#A7ADBD;
+    --indigo:#93A6D9;
+    --indigo-soft:#7C90C6;
+    --gold:#D9AE55;
+    --vermillion:#E28A7E;
+    --line:#2C3244;
+    --line-strong:#3A4258;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans KR', system-ui, sans-serif;
+    padding-left:max(16px, env(safe-area-inset-left,0px));
+    padding-right:max(16px, env(safe-area-inset-right,0px));
+  }
+  .wrap{max-width:640px;margin:0 auto;padding-block:20px 48px;}
+
+  h1,h2,h3{font-family:'Song Myung', 'Noto Serif KR', serif; margin:0; text-wrap:balance;}
+
+  .hero{
+    padding:22px 20px;
+    border-radius:18px;
+    background:linear-gradient(155deg, var(--indigo) 0%, var(--indigo-soft) 100%);
+    color:#F3F0E6;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; right:-30px; top:-30px; width:150px; height:150px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(185,139,46,0.35), transparent 70%);
+  }
+  .hero .eyebrow{
+    font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--gold); font-weight:600; margin-bottom:6px;
+  }
+  .hero h1{font-size:28px; line-height:1.25; color:#F7F4EA;}
+  .hero .dates{
+    margin-top:10px; font-size:14px; color:#D9DEF0;
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero .dates .sep{color:var(--gold);}
+  .hero .badge{
+    display:inline-flex; margin-top:14px; padding:5px 12px; border-radius:999px;
+    background:rgba(247,244,234,0.14); font-size:12.5px; color:#F3F0E6;
+    border:1px solid rgba(247,244,234,0.25);
+  }
+
+  .tabs{
+    display:flex; gap:8px; margin-top:18px; padding:4px;
+    background:var(--surface-2); border-radius:14px; border:1px solid var(--line);
+  }
+  .tab-btn{
+    flex:1; padding:10px 0; border:none; background:transparent; cursor:pointer;
+    font-family:inherit; font-size:14.5px; font-weight:600; color:var(--ink-dim);
+    border-radius:10px; transition:background .15s, color .15s;
+  }
+  .tab-btn[aria-selected="true"]{
+    background:var(--surface); color:var(--indigo); box-shadow:0 1px 3px rgba(0,0,0,.08);
+  }
+  :root[data-theme="dark"] .tab-btn[aria-selected="true"],
+  :root:not([data-theme="light"]) .tab-btn[aria-selected="true"]{
+    color:var(--gold);
+  }
+
+  section.view{margin-top:18px;}
+
+  .day-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:18px 18px 6px; margin-bottom:16px;
+  }
+  .day-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+    margin-bottom:4px;
+  }
+  .day-head .day-num{
+    font-family:'Song Myung', serif; font-size:20px; color:var(--indigo);
+  }
+  :root[data-theme="dark"] .day-head .day-num,
+  :root:not([data-theme="light"]) .day-head .day-num{ color:var(--gold); }
+  .day-head .day-date{
+    font-size:13px; color:var(--ink-dim); font-variant-numeric: tabular-nums;
+  }
+  .day-theme{
+    font-size:13.5px; color:var(--vermillion); font-weight:600; margin-bottom:14px;
+  }
+
+  .slot{
+    display:grid; grid-template-columns:64px 1fr; gap:12px;
+    padding-block:10px; border-top:1px solid var(--line);
+  }
+  .slot:first-of-type{border-top:none;}
+  .slot .time{
+    font-size:12.5px; font-weight:700; color:var(--ink-dim); padding-top:2px;
+    letter-spacing:.02em;
+  }
+  .slot .content .title{font-size:14.5px; font-weight:600; margin-bottom:3px;}
+  .slot .content .desc{font-size:13.5px; color:var(--ink-dim); line-height:1.55;}
+  .tip{
+    margin-top:8px; margin-bottom:12px; padding:9px 12px; border-radius:10px;
+    background:color-mix(in srgb, var(--vermillion) 12%, transparent);
+    border:1px solid color-mix(in srgb, var(--vermillion) 30%, transparent);
+    font-size:13px; color:var(--ink); line-height:1.5;
+  }
+  .tip b{color:var(--vermillion);}
+
+  .progress-bar-wrap{
+    display:flex; align-items:center; gap:10px; margin-bottom:16px;
+    font-size:13.5px; color:var(--ink-dim);
+  }
+  .progress-track{
+    flex:1; height:8px; border-radius:999px; background:var(--surface-2);
+    border:1px solid var(--line); overflow:hidden;
+  }
+  .progress-fill{
+    height:100%; background:linear-gradient(90deg, var(--gold), var(--vermillion));
+    width:0%; transition:width .2s;
+  }
+  .progress-count{font-weight:700; color:var(--indigo); white-space:nowrap; font-variant-numeric: tabular-nums;}
+  :root[data-theme="dark"] .progress-count,
+  :root:not([data-theme="light"]) .progress-count{ color:var(--gold); }
+
+  .pack-group{margin-bottom:16px;}
+  .pack-group h3{
+    font-size:14px; font-family:'Noto Sans KR', sans-serif; font-weight:700;
+    color:var(--indigo); margin-bottom:8px; display:flex; align-items:center; gap:7px;
+  }
+  :root[data-theme="dark"] .pack-group h3,
+  :root:not([data-theme="light"]) .pack-group h3{ color:var(--gold); }
+  .pack-group h3::before{
+    content:""; width:6px; height:6px; border-radius:50%; background:var(--vermillion); flex:none;
+  }
+  .pack-list{
+    list-style:none; margin:0; padding:0; background:var(--surface);
+    border:1px solid var(--line); border-radius:14px; overflow:hidden;
+  }
+  .pack-item{
+    display:flex; align-items:flex-start; gap:10px; padding:11px 14px;
+    border-top:1px solid var(--line); cursor:pointer;
+  }
+  .pack-item:first-child{border-top:none;}
+  .pack-item input{
+    appearance:none; width:19px; height:19px; flex:none; margin-top:1px;
+    border:2px solid var(--line-strong); border-radius:6px; cursor:pointer;
+    position:relative; background:var(--surface);
+  }
+  .pack-item input:checked{background:var(--indigo); border-color:var(--indigo);}
+  :root[data-theme="dark"] .pack-item input:checked,
+  :root:not([data-theme="light"]) .pack-item input:checked{ background:var(--gold); border-color:var(--gold); }
+  .pack-item input:checked::after{
+    content:""; position:absolute; left:5px; top:1px; width:5px; height:9px;
+    border:solid #fff; border-width:0 2px 2px 0; transform:rotate(40deg);
+  }
+  :root[data-theme="dark"] .pack-item input:checked::after,
+  :root:not([data-theme="light"]) .pack-item input:checked::after{ border-color:#1A1E2C; }
+  .pack-item .label{font-size:14.5px; line-height:1.4;}
+  .pack-item .note{font-size:12.5px; color:var(--ink-dim); margin-top:2px;}
+  .pack-item.checked .label{color:var(--ink-dim); text-decoration:line-through; text-decoration-color:var(--line-strong);}
+
+  .foot-note{
+    margin-top:20px; font-size:12.5px; color:var(--ink-dim); text-align:center; line-height:1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">Fukuoka Trip</div>
+    <h1>후쿠오카 3박4일</h1>
+    <div class="dates">
+      <span>2026.10.03 (토)</span><span class="sep">→</span><span>2026.10.06 (화)</span>
+    </div>
+    <span class="badge">가을 하카타 · 야타이 &amp; 다자이후</span>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab-btn" id="tab-btn-itinerary" role="tab" aria-selected="true">일정</button>
+    <button class="tab-btn" id="tab-btn-packing" role="tab" aria-selected="false">준비물</button>
+  </div>
+
+  <section class="view" id="view-itinerary">
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-num">DAY 1</span>
+        <span class="day-date">10.03 (토) · 도착일</span>
+      </div>
+      <div class="day-theme">공항 → 텐진 · 나카스 야타이 첫밤</div>
+
+      <div class="slot">
+        <div class="time">오후</div>
+        <div class="content">
+          <div class="title">공항 도착 → 숙소 체크인</div>
+          <div class="desc">지하철/버스로 숙소 이동 후 짐 풀기. 첫날은 이동 부담을 줄이려 숙소 근처 위주로 동선을 짠다.</div>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="time">늦은<br>오후</div>
+        <div class="content">
+          <div class="title">텐진(天神) 시내 산책</div>
+          <div class="desc">텐진 지하상가, 니시테츠 백화점, 이무즈(IMS) 등을 가볍게 둘러본다.</div>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="time">저녁</div>
+        <div class="content">
+          <div class="title">나카스(中洲) 야타이 거리</div>
+          <div class="desc">나카가와 강변 포장마차에서 모츠나베 또는 하카타 라멘으로 첫 저녁. 강 건너 네온 야경도 함께.</div>
+        </div>
+      </div>
+      <div class="tip"><b>Tip</b> 야타이는 대부분 현금만 받는 곳이 많으니 엔화 소액권을 미리 챙기는 게 좋다.</div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-num">DAY 2</span>
+        <span class="day-date">10.04 (일)</span>
+      </div>
+      <div class="day-theme">다자이후 당일치기 → 오호리공원 → 모모치 해변 야경</div>
+
+      <div class="slot">
+        <div class="time">오전</div>
+        <div class="content">
+          <div class="title">다자이후(太宰府) 텐만구</div>
+          <div class="desc">니시테츠 텐진역에서 특급으로 약 30분. 학문의 신을 모신 텐만구 참배, 참배길에서 명물 간식 우메가에모찌(梅ヶ枝餅) 맛보기.</div>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="time">오후</div>
+        <div class="content">
+          <div class="title">오호리공원 · 후쿠오카성터</div>
+          <div class="desc">시내로 돌아와 연못을 낀 오호리공원 산책, 바로 옆 후쿠오카성 석벽·천수각터에서 시내 조망.</div>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="time">저녁</div>
+        <div class="content">
+          <div class="title">모모치 해변 · 후쿠오카 타워</div>
+          <div class="desc">해 질 무렵 모모치 해변공원과 후쿠오카 타워 야경 감상 후 근처에서 저녁 식사.</div>
+        </div>
+      </div>
+      <div class="tip"><b>Tip</b> 다자이후는 왕복 전철 티켓(다자이후 오뜨쿠棒 티켓)이 있으면 조금 더 저렴하다.</div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-num">DAY 3</span>
+        <span class="day-date">10.05 (월)</span>
+      </div>
+      <div class="day-theme">하카타 구시가지 → 이토시마 반도(선택)</div>
+
+      <div class="slot">
+        <div class="time">오전</div>
+        <div class="content">
+          <div class="title">쿠시다신사 · 토초지 대불</div>
+          <div class="desc">하카타 기온 야마카사 축제의 본산인 쿠시다신사, 이어서 일본 최대급 목조 대불이 있는 토초지(東長寺) 참배.</div>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="time">낮</div>
+        <div class="content">
+          <div class="title">캐널시티 하카타</div>
+          <div class="desc">운하를 낀 복합 쇼핑몰에서 점심 및 분수쇼 관람, 기념품 쇼핑.</div>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="time">오후~<br>저녁</div>
+        <div class="content">
+          <div class="title">이토시마(糸島) 반도 드라이브</div>
+          <div class="desc">사쿠라이 후타미가우라(부부바위)와 해안 카페 거리. 시내에서 40~60분 거리라 렌터카나 버스투어 추천 — 시간이 부족하면 야나가와 뱃놀이나 시내 쇼핑으로 대체 가능.</div>
+        </div>
+      </div>
+      <div class="tip"><b>Tip</b> 마지막 밤이니 하카타역 근처 이치란(一蘭) 본점 라멘이나 스미비 야키토리로 마무리하기 좋다.</div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-num">DAY 4</span>
+        <span class="day-date">10.06 (화) · 출발일</span>
+      </div>
+      <div class="day-theme">하카타역 기념품 쇼핑 → 공항</div>
+
+      <div class="slot">
+        <div class="time">오전</div>
+        <div class="content">
+          <div class="title">체크아웃 · 하카타역 쇼핑</div>
+          <div class="desc">아뮤플라자·데이토스에서 명란, 명과 히요코 등 기념품 마지막 구매.</div>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="time">낮</div>
+        <div class="content">
+          <div class="title">공항 이동 · 출발</div>
+          <div class="desc">여유 있게 공항 도착해 면세 쇼핑 후 탑승.</div>
+        </div>
+      </div>
+      <div class="tip"><b>Tip</b> 명란·명과류는 상온 보관 가능한 제품인지 포장에서 확인하고 구매하기.</div>
+    </div>
+
+  </section>
+
+  <section class="view" id="view-packing" hidden>
+
+    <div class="progress-bar-wrap">
+      <span>챙긴 개수</span>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <span class="progress-count" id="progress-count">0/0</span>
+    </div>
+
+    <div class="pack-group" data-group="문서·금융">
+      <h3>문서 · 금융</h3>
+      <ul class="pack-list">
+        <li class="pack-item"><input type="checkbox" id="p1"><label class="label-wrap" for="p1"><div class="label">여권 (유효기간 6개월 이상 확인)</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p2"><label class="label-wrap" for="p2"><div class="label">여권 사본 / 여권용 사진 1매</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p3"><label class="label-wrap" for="p3"><div class="label">왕복 항공권, 숙소 예약 확인서</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p4"><label class="label-wrap" for="p4"><div class="label">여행자보험 가입 증서</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p5"><label class="label-wrap" for="p5"><div class="label">엔화 현금<div class="note">야타이·소규모 가게는 카드 안 되는 곳이 많음</div></div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p6"><label class="label-wrap" for="p6"><div class="label">해외결제 가능 신용카드</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p7"><label class="label-wrap" for="p7"><div class="label">Visit Japan Web 사전 등록<div class="note">입국심사·세관 QR코드로 빠르게 통과</div></div></label></li>
+      </ul>
+    </div>
+
+    <div class="pack-group" data-group="통신·전자기기">
+      <h3>통신 · 전자기기</h3>
+      <ul class="pack-list">
+        <li class="pack-item"><input type="checkbox" id="p8"><label class="label-wrap" for="p8"><div class="label">유심/이심(eSIM) 또는 포켓와이파이</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p9"><label class="label-wrap" for="p9"><div class="label">전원 변환 어댑터<div class="note">일본은 Type A · 100V (한국 Type C/F · 220V와 다름)</div></div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p10"><label class="label-wrap" for="p10"><div class="label">보조배터리 · 충전 케이블</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p11"><label class="label-wrap" for="p11"><div class="label">카메라 (선택)</div></label></li>
+      </ul>
+    </div>
+
+    <div class="pack-group" data-group="의류">
+      <h3>의류</h3>
+      <ul class="pack-list">
+        <li class="pack-item"><input type="checkbox" id="p12"><label class="label-wrap" for="p12"><div class="label">가벼운 긴팔 옷 + 얇은 가디건/바람막이<div class="note">10월 후쿠오카 낮 18~25℃, 아침저녁 선선함</div></div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p13"><label class="label-wrap" for="p13"><div class="label">편한 운동화<div class="note">다자이후·이토시마 등 걷는 일정 많음</div></div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p14"><label class="label-wrap" for="p14"><div class="label">여벌 속옷 · 양말 (3박4일분)</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p15"><label class="label-wrap" for="p15"><div class="label">접이식 우산 / 우비<div class="note">가을 비 대비</div></div></label></li>
+      </ul>
+    </div>
+
+    <div class="pack-group" data-group="세면·위생">
+      <h3>세면 · 위생</h3>
+      <ul class="pack-list">
+        <li class="pack-item"><input type="checkbox" id="p16"><label class="label-wrap" for="p16"><div class="label">개인 세면도구 (치약·칫솔 등)</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p17"><label class="label-wrap" for="p17"><div class="label">상비약 (소화제 · 감기약 · 진통제)</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p18"><label class="label-wrap" for="p18"><div class="label">선크림 · 립밤</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p19"><label class="label-wrap" for="p19"><div class="label">렌즈/안경, 화장품 등 개인용품</div></label></li>
+      </ul>
+    </div>
+
+    <div class="pack-group" data-group="기타">
+      <h3>기타</h3>
+      <ul class="pack-list">
+        <li class="pack-item"><input type="checkbox" id="p20"><label class="label-wrap" for="p20"><div class="label">장바구니 / 에코백<div class="note">일부 마트·편의점 비닐봉투 유료</div></div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p21"><label class="label-wrap" for="p21"><div class="label">여권 지갑, 작은 크로스백</div></label></li>
+        <li class="pack-item"><input type="checkbox" id="p22"><label class="label-wrap" for="p22"><div class="label">기념품 담을 캐리어 여유공간<div class="note">명란·명과 히요코 등 하카타 명물</div></div></label></li>
+      </ul>
+    </div>
+
+    <div class="foot-note">체크한 항목은 이 브라우저에만 저장됩니다.</div>
+
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'fukuoka-trip-v1';
+  var TAB_KEY = 'fukuoka-trip-tab';
+
+  var tabItin = document.getElementById('tab-btn-itinerary');
+  var tabPack = document.getElementById('tab-btn-packing');
+  var viewItin = document.getElementById('view-itinerary');
+  var viewPack = document.getElementById('view-packing');
+
+  function showTab(name){
+    var isPack = name === 'packing';
+    viewItin.hidden = isPack;
+    viewPack.hidden = !isPack;
+    tabItin.setAttribute('aria-selected', String(!isPack));
+    tabPack.setAttribute('aria-selected', String(isPack));
+    try { localStorage.setItem(TAB_KEY, name); } catch(e){}
+  }
+
+  tabItin.addEventListener('click', function(){ showTab('itinerary'); });
+  tabPack.addEventListener('click', function(){ showTab('packing'); });
+
+  try {
+    var savedTab = localStorage.getItem(TAB_KEY);
+    if (savedTab === 'packing') showTab('packing');
+  } catch(e){}
+
+  var checkboxes = Array.prototype.slice.call(document.querySelectorAll('.pack-item input[type="checkbox"]'));
+
+  function loadState(){
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch(e){ return {}; }
+  }
+  function saveState(state){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){}
+  }
+
+  function updateProgress(){
+    var total = checkboxes.length;
+    var done = checkboxes.filter(function(cb){ return cb.checked; }).length;
+    var pct = total ? Math.round(done/total*100) : 0;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-count').textContent = done + '/' + total;
+  }
+
+  var state = loadState();
+  checkboxes.forEach(function(cb){
+    if (state[cb.id]) {
+      cb.checked = true;
+      cb.closest('.pack-item').classList.add('checked');
+    }
+    cb.addEventListener('change', function(){
+      var s = loadState();
+      s[cb.id] = cb.checked;
+      saveState(s);
+      cb.closest('.pack-item').classList.toggle('checked', cb.checked);
+      updateProgress();
+    });
+  });
+  updateProgress();
+})();
+</script>
+</body>
+</html>
